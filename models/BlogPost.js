@@ -1,32 +1,32 @@
-const { Datatypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const attributes = {
   id: {
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
-    type: Datatypes.INTEGER,
+    type: DataTypes.INTEGER,
   },
   title: {
     allowNull: false,
-    type: Datatypes.STRING,
+    type: DataTypes.STRING,
   },
   content: {
     allowNull: false,
-    type: Datatypes.STRING,
+    type: DataTypes.STRING,
   },
   userId: {
     allowNull: false,
-    type: Datatypes.INTEGER,
+    type: DataTypes.INTEGER,
     foreingKey: true,
-},
-    published: Datatypes.DATE,
-    updated: Datatypes.DATE,
+  },
+  published: DataTypes.DATE,
+  updated: DataTypes.DATE,
 };
 
 module.exports = (sequelize, _DataTypes) => {
   const BlogPost = sequelize.define('BlogPost', attributes, {
-    timeStamps: false,
+    timestamps: false,
     tablename: 'BlogPosts',
   });
 

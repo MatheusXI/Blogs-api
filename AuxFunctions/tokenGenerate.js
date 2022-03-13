@@ -9,7 +9,7 @@ const jwtConfig = {
 };
 
 module.exports = (obj) => {
-  const token = jwt.sign(obj, secret, jwtConfig);
-  console.log(token, 'token jwtGenerate');
+  const { password, ...objWithoutPassword } = obj;
+  const token = jwt.sign(objWithoutPassword, secret, jwtConfig);
   return token;
 };

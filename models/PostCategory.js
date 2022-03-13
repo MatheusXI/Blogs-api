@@ -2,7 +2,7 @@ const attributes = {};
 
 module.exports = (sequelize, _DataTypes) => {
   const PostCategory = sequelize.define('PostCategory', attributes, {
-    timeStamps: false,
+    timestamps: false,
     tablename: 'PostsCategories',
   });
 
