@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const tokenGenerate = require('../auxFunctions/tokenGenerate');
+const tokenGenerate = require('../auxFunctions/tokenGenerate.js');
 
 const createUser = async (obj) => {
   const verifyUser = await User.findOne({ where: { email: obj.email } });
