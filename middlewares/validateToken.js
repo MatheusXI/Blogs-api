@@ -13,6 +13,6 @@ module.exports = async (req, res, next) => {
   if (verifyToken.error) {
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
-
+  req.token = verifyToken;
   next();
 };
