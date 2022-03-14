@@ -26,6 +26,9 @@ app.get('/user/:id', validateToken, userControllers.getUserById);
 
 app.post('/categories', validateToken, validateCategory, categoryControllers.createCategory);
 
+app.get('/categories', validateToken, categoryControllers.getAllCategories);
+app.get('/categories/:id', validateToken, categoryControllers.getCategoryById);
+
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
 // não remova esse endpoint, e para o avaliador funcionar
