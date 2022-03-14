@@ -24,7 +24,7 @@ const checkUserLogin = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   const token = req.headers.authorization;
-  console.log(req.headers);
+
   if (!token) return res.status(401).json({ message: 'Token not found' });
   try {
     const users = await userServices.getAllUsers(token);
@@ -36,8 +36,23 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  const token = req.headers.authorization;
+  const { id } = req.params;
+  if (!token) return res.status(401).json({ message: 'Token not found' });
+  try {
+    const user = await userServices.getUserById(token, id);
+    if (user.message) return res.status(user.status).json({ message: user.message });
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 module.exports = {
   createUser,
   checkUserLogin,
   getAllUsers,
+  getUserById,
 };

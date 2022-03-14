@@ -4,11 +4,14 @@ const secret = process.env.JWT_SECRET;
 
 module.exports = (token, userInfo) => {
   try {
-    console.log(token, 'token verify token');
-
     const decode = jwt.verify(token, secret);
-    console.log(decode, 'decode verify token');
-    return userInfo.find((info) => info.dataValues.email === decode.email);
+
+    const user = userInfo.find(
+      (info) => info.dataValues.email === decode.email,
+    );
+    if (!user) return { error: 'token invalido' };
+    console.log(user, 'user verify token');
+    return user;
   } catch (error) {
     console.log(error);
     return { error };

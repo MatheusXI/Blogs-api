@@ -29,14 +29,26 @@ const getAllUsers = async (token) => {
   const users = await User.findAll({ attributes: { exclude: ['password'] } });
   console.log(users[0].dataValues, 'users get all services');
   const verify = tokenVerify(token, users);
-
+  console.log(verify, 'verify getAll');
   if (verify.error) return { message: 'Expired or invalid token' };
 
   return users;
+};
+
+const getUserById = async (token, id) => {
+  const user = await User.findByPk(id);
+  if (!user) return { status: 404, message: 'User does not exist' };
+
+  const verify = tokenVerify(token, [user]);
+
+  if (verify.error) return { status: 401, message: 'Expired or invalid token' };
+
+  return user;
 };
 
 module.exports = {
   createUser,
   checkUserLogin,
   getAllUsers,
+  getUserById,
 };
