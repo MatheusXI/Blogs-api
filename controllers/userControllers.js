@@ -22,7 +22,22 @@ const checkUserLogin = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  const token = req.headers.authorization;
+  console.log(req.headers);
+  if (!token) return res.status(401).json({ message: 'Token not found' });
+  try {
+    const users = await userServices.getAllUsers(token);
+    if (users.message) return res.status(401).json(users);
+    return res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Internal server Error' });
+  }
+};
+
 module.exports = {
   createUser,
   checkUserLogin,
+  getAllUsers,
 };

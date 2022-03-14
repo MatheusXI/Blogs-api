@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const tokenGenerate = require('../auxiliarFunctions/tokenG');
-/* const verifyToken = require('../auxFunctions/verifyToken.js'); */
-console.log(tokenGenerate, 'tokenGenerate');
+const tokenVerify = require('../auxiliarFunctions/verifyToken');
+
 const createUser = async (obj) => {
   const verifyUser = await User.findOne({ where: { email: obj.email } });
 
@@ -25,12 +25,18 @@ const checkUserLogin = async (obj) => {
   return { token };
 };
 
-/* const getAllUsers = async (token) => {
-  const users = await User.findAll();
-  const verify
-}
- */
+const getAllUsers = async (token) => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  console.log(users[0].dataValues, 'users get all services');
+  const verify = tokenVerify(token, users);
+
+  if (verify.error) return { message: 'Expired or invalid token' };
+
+  return users;
+};
+
 module.exports = {
   createUser,
   checkUserLogin,
+  getAllUsers,
 };
