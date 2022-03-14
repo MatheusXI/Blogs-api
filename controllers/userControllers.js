@@ -23,12 +23,8 @@ const checkUserLogin = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  const token = req.headers.authorization;
-
-  if (!token) return res.status(401).json({ message: 'Token not found' });
   try {
-    const users = await userServices.getAllUsers(token);
-    if (users.message) return res.status(401).json(users);
+    const users = await userServices.getAllUsers();
     return res.status(200).json(users);
   } catch (error) {
     console.log(error);
@@ -37,11 +33,10 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const token = req.headers.authorization;
   const { id } = req.params;
-  if (!token) return res.status(401).json({ message: 'Token not found' });
+
   try {
-    const user = await userServices.getUserById(token, id);
+    const user = await userServices.getUserById(id);
     if (user.message) return res.status(user.status).json({ message: user.message });
     return res.status(200).json(user);
   } catch (error) {

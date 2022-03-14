@@ -6,6 +6,7 @@ const categoryControllers = require('./controllers/categoryControllers');
 
 const validateUser = require('./middlewares/validateUser');
 const validateCategory = require('./middlewares/validateCategory');
+const validateToken = require('./middlewares/validateToken');
 
 const [validateEmail, validatePassword] = validateUser;
 const app = express();
@@ -20,10 +21,10 @@ app.post(
   userControllers.checkUserLogin,
 );
 
-app.get('/user', userControllers.getAllUsers);
-app.get('/user/:id', userControllers.getUserById);
+app.get('/user', validateToken, userControllers.getAllUsers);
+app.get('/user/:id', validateToken, userControllers.getUserById);
 
-app.post('/categories', validateCategory, categoryControllers.createCategory);
+app.post('/categories', validateToken, validateCategory, categoryControllers.createCategory);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 

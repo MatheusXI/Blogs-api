@@ -1,6 +1,5 @@
 const { User } = require('../models');
 const tokenGenerate = require('../auxiliarFunctions/tokenG');
-const tokenVerify = require('../auxiliarFunctions/verifyToken');
 
 const createUser = async (obj) => {
   const verifyUser = await User.findOne({ where: { email: obj.email } });
@@ -25,23 +24,15 @@ const checkUserLogin = async (obj) => {
   return { token };
 };
 
-const getAllUsers = async (token) => {
+const getAllUsers = async () => {
   const users = await User.findAll({ attributes: { exclude: ['password'] } });
-  console.log(users[0].dataValues, 'users get all services');
-  const verify = tokenVerify(token, users);
-  console.log(verify, 'verify getAll');
-  if (verify.error) return { message: 'Expired or invalid token' };
 
   return users;
 };
 
-const getUserById = async (token, id) => {
+const getUserById = async (id) => {
   const user = await User.findByPk(id);
   if (!user) return { status: 404, message: 'User does not exist' };
-
-  const verify = tokenVerify(token, [user]);
-
-  if (verify.error) return { status: 401, message: 'Expired or invalid token' };
 
   return user;
 };
