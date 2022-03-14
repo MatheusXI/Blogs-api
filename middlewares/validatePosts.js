@@ -31,12 +31,11 @@ const validateContent = async (req, res, next) => {
 const validateCategoryIds = async (req, res, next) => {
   const { categoryIds } = req.body;
   const categories = await Category.findAll();
-  const mapa = categories.map(obj => obj.dataValues.id);
+  const mapa = categories.map((obj) => obj.dataValues.id);
   if (!categoryIds) {
     return res.status(400).json({ message: '"categoryIds" is required' });
   }
-  const verifyCategory = categoryIds.every((id) =>
-    mapa.includes(id));
+  const verifyCategory = categoryIds.every((id) => mapa.includes(id));
 
   if (!verifyCategory) {
     return res.status(400).json({ message: '"categoryIds" not found' });
