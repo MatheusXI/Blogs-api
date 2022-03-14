@@ -2,7 +2,10 @@ const express = require('express');
 
 const bodyParser = require('body-parser');
 const userControllers = require('./controllers/userControllers');
+const categoryControllers = require('./controllers/categoryControllers');
+
 const validateUser = require('./middlewares/validateUser');
+const validateCategory = require('./middlewares/validateCategory');
 
 const [validateEmail, validatePassword] = validateUser;
 const app = express();
@@ -19,6 +22,8 @@ app.post(
 
 app.get('/user', userControllers.getAllUsers);
 app.get('/user/:id', userControllers.getUserById);
+
+app.post('/categories', validateCategory, categoryControllers.createCategory);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
