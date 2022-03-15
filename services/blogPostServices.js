@@ -1,5 +1,4 @@
 const { BlogPost, User, Category } = require('../models');
-const PostCategory = require('../models/PostCategory');
 
 const createPost = async (obj, id) => {
   const newObj = { ...obj, userId: id };
@@ -14,7 +13,6 @@ const getAllPosts = async () => {
       {
         model: User,
         as: 'user',
-      
       },
       {
         model: Category,
