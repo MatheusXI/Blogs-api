@@ -29,7 +29,7 @@ const attributes = {
 module.exports = (sequelize, _DataTypes) => {
   const User = sequelize.define('User', attributes, {
     timestamps: false,
-    tablename: 'Users',
+    tableName: 'Users',
   });
 
   User.associate = (models) => {
